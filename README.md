@@ -3,6 +3,8 @@ Test repository for nexus lessons
 
 
 
+<details>
+<summary>Install Nexus using Yum</summary>
 
 # Prerequisite steps:
 * Rocky Linux 8
@@ -35,3 +37,4 @@ So you can use the value from this file:
 `sudo cat /opt/sonatype/sonatype-work/nexus3/admin.password`
 
 And then go to http://your_host:8081/ in your browser to log in as "admin" user using the password from the file above.
+</details>
