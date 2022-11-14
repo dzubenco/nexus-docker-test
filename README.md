@@ -179,6 +179,7 @@ And then go to http://your_host:8081/ in your browser to log in as "admin" user 
 <details> 
 <summary>Run Nexus as a Docker container</summary>
 
+## 
 
 You can find instructions at:
 [https://github.com/sonatype/docker-nexus3](https://github.com/sonatype/docker-nexus3)
@@ -206,6 +207,7 @@ docker-compose ps
 <details>
 <summary>Install Nexus instance within a Kubernetes cluster</summary>
 
+## Links to the Charts:
 
 Official Helm chart:
 [https://artifacthub.io/packages/helm/sonatype/nexus-repository-manager](https://artifacthub.io/packages/helm/sonatype/nexus-repository-manager)
