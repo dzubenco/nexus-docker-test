@@ -37,7 +37,7 @@ And then go to http://your_host:8081/ in your browser to log in as "admin" user 
 </details>
 
 <details>
-<summary>Manual method</summary>
+<summary>Install Nexus manually</summary>
 
 ## Prerequisite steps:
 
@@ -173,4 +173,41 @@ sudo vi /opt/sonatype-work/nexus3/admin.password
 ```
 
 And then go to http://your_host:8081/ in your browser to log in as "admin" user using the password from the file above.
+</details>
+
+
+<details> 
+<summary>Run Nexus as a Docker container</summary>
+
+You can find instructions at:
+[https://github.com/sonatype/docker-nexus3](https://github.com/sonatype/docker-nexus3)
+
+Or create a docker-compose file similar to the following:
+[link](https://github.com/dzubenco/nexus-docker-test/blob/main/docker-compose.yml)
+
+Then run via the following commands:
+
+```
+docker-compose pull
+docker-compose up -d
+```
+
+It can take some time (2-3 minutes) for the service to launch in a new container. 
+You can the status using the following command  to determine once Nexus is ready:
+
+```
+docker-compose ps
+```
+
+
+</details>
+
+<details>
+<summary>Install Nexus instance within a Kubernetes cluster</summary>
+
+Official Helm chart:
+[https://artifacthub.io/packages/helm/sonatype/nexus-repository-manager](https://artifacthub.io/packages/helm/sonatype/nexus-repository-manager)
+
+Community Helm chart:
+[https://artifacthub.io/packages/helm/stevehipwell/nexus3](https://artifacthub.io/packages/helm/stevehipwell/nexus3)
 </details>
