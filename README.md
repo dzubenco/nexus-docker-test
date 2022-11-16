@@ -1,5 +1,8 @@
 # Installation methods
 
+Official documentation:
+[https://help.sonatype.com/repomanager3/installation-and-upgrades](https://help.sonatype.com/repomanager3/installation-and-upgrades)
+
 <details>
 <summary>Install Nexus using Yum</summary>
 
@@ -215,3 +218,8 @@ Official Helm chart:
 Community Helm chart:
 [https://artifacthub.io/packages/helm/stevehipwell/nexus3](https://artifacthub.io/packages/helm/stevehipwell/nexus3)
 </details>
+
+
+#Backup and restore (blob stores and database)
+
+https://help.sonatype.com/repomanager3/planning-your-implementation/backup-and-restore
