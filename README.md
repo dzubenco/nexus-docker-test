@@ -318,3 +318,131 @@ Go to "server administration and configuration" section -> Choose "repositories"
 <summary><h4>Client configuration & How to use</h4></summary>
 
 </details>
+
+# Setup Helm repositories
+
+<details>
+<summary><h4>Setup Proxy Helm repository</h4></summary>
+
+#
+
+</details>
+
+<details>
+<summary><h4>Setup Hosted Helm repository</h4></summary>
+
+#
+
+</details>
+
+<details>
+<summary><h4>Client configuration & How to use</h4></summary>
+
+</details>
+
+# Setup Maven repositories
+
+<details>
+<summary><h4>Setup Proxy Maven repository</h4></summary>
+
+#
+
+</details>
+
+<details>
+<summary><h4>Setup Hosted Maven repository</h4></summary>
+
+#
+
+</details>
+
+<details>
+<summary><h4>Setup Group Maven repository</h4></summary>
+
+#
+
+</details>
+
+<details>
+<summary><h4>Client configuration & How to use</h4></summary>
+
+</details>
+
+# Setup Conda repositories
+
+<details>
+<summary><h4>Setup Proxy Conda repository</h4></summary>
+
+#
+
+</details>
+
+<details>
+<summary><h4>Client configuration & How to use</h4></summary>
+
+</details>
+
+# Setup Npm repositories
+
+<details>
+<summary><h4>Setup Proxy Npm repository</h4></summary>
+
+#
+
+</details>
+
+<details>
+<summary><h4>Setup Hosted Npm repository</h4></summary>
+
+#
+
+</details>
+
+<details>
+<summary><h4>Setup Group Npm repository</h4></summary>
+
+#
+
+</details>
+
+<details>
+<summary><h4>Nginx configuration to redirect npm audit</h4></summary>
+
+</details>
+
+<details>
+<summary><h4>Client configuration & How to use</h4></summary>
+
+</details>
+
+# Setup Pypi repositories
+
+<details>
+<summary><h4>Setup Proxy Pypi repository</h4></summary>
+
+#
+
+</details>
+
+<details>
+<summary><h4>Setup Hosted Pypi repository</h4></summary>
+
+#
+
+</details>
+
+<details>
+<summary><h4>Setup Group Pypi repository</h4></summary>
+
+#
+
+</details>
+
+<details>
+<summary><h4>Client configuration & How to use</h4></summary>
+
+</details>
+
+# Debian
+
+#How to configure S3 Blobstore in Nexus
