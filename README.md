@@ -40,7 +40,7 @@ And then go to http://your_host:8081/ in your browser to log in as "admin" user 
 </details>
 
 <details>
-<summary>Install Nexus manually</summary>
+<summary><h4>Install Nexus manually</h4></summary>
 
 ## Prerequisite steps:
 
@@ -180,7 +180,7 @@ And then go to http://your_host:8081/ in your browser to log in as "admin" user 
 
 
 <details> 
-<summary>Run Nexus as a Docker container</summary>
+<summary><h4>Run Nexus as a Docker container</h4></summary>
 
 ## 
 
@@ -208,7 +208,7 @@ docker-compose ps
 </details>
 
 <details>
-<summary>Install Nexus instance within a Kubernetes cluster</summary>
+<summary><h4>Install Nexus instance within a Kubernetes cluster</h4></summary>
 
 ## Links to the Charts:
 
@@ -228,7 +228,7 @@ https://help.sonatype.com/repomanager3/planning-your-implementation/backup-and-r
 # Post-install steps
 
 <details>
-<summary>Anonymous access & Local Authorizing Realm</summary>
+<summary><h4>Anonymous access & Local Authorizing Realm</h4></summary>
 
 #
 During initial configuration of Nexus repository you should remain the following checkbox and choose "Local Authorizing Realm" in the Realm dropdown:
@@ -245,7 +245,7 @@ Then go to [ 1) Admin panel -> 2) Realms ] and add Local Authorizing Realm to th
 
 
 <details> 
-<summary>Create Cleanup policies for each types of repo</summary> 
+<summary><h4>Create Cleanup policies for each types of repo</h4></summary> 
 
 #
 1) Login to Nexus as Admin
@@ -281,7 +281,7 @@ Nexus Repository Manager support Docker registries as the Docker repository form
 Prerequisite: Go to "server administration and configuration" section -> Choose "Security" -> "Realms" option on the left sidebar -> Add Docker Bearer Token Realm to the active block
 
 <details>
-<summary>Setup Proxy Docker repository</summary>
+<summary><h4>Setup Proxy Docker repository</h4></summary>
 
 #
 Go to "server administration and configuration" section -> Choose "repositories" option on the left sidebar, then click "create repository" button at the very top of the screen -> Choose "docker (proxy)" type
@@ -305,16 +305,16 @@ Go to "server administration and configuration" section -> Choose "repositories"
 </details>
 
 <details>
-<summary>Setup Hosted Docker repository</summary>
+<summary><h4>Setup Hosted Docker repository</h4></summary>
 
 </details>
 
 <details>
-<summary>Setup Group Docker repository</summary>
+<summary><h4>Setup Group Docker repository</h4></summary>
 
 </details>
 
 <details>
-<summary>Client configuration & How to use</summary>
+<summary><h4>Client configuration & How to use</h4></summary>
 
 </details>
