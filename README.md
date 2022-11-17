@@ -445,4 +445,4 @@ Go to "server administration and configuration" section -> Choose "repositories"
 
 # Debian
 
-#How to configure S3 Blobstore in Nexus
+# How to configure S3 Blobstore in Nexus
