@@ -227,6 +227,8 @@ https://help.sonatype.com/repomanager3/planning-your-implementation/backup-and-r
 
 # Post-install steps
 
+![img](https://bitbucket.org/repo/Ag9LKzq/images/3880051481-Screenshot_20220922_100138.png)
+
 <details>
 <summary>Anonymous access & Local Authorizing Realm</summary>
 
