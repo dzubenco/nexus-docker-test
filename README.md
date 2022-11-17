@@ -4,7 +4,7 @@ Official documentation:
 [https://help.sonatype.com/repomanager3/installation-and-upgrades](https://help.sonatype.com/repomanager3/installation-and-upgrades)
 
 <details>
-<summary>**Install Nexus using Yum**</summary>
+<summary><h4>Install Nexus using Yum</h4></summary>
 
 ## Prerequisite steps:
 * Rocky Linux 8
