@@ -286,7 +286,7 @@ Prerequisite: Go to "server administration and configuration" section -> Choose 
 #
 Go to "server administration and configuration" section -> Choose "repositories" option on the left sidebar, then click "create repository" button at the very top of the screen -> Choose "docker (proxy)" type
 
-![Screenshot_20220516_125027.png](https://bitbucket.org/repo/Ag9LKzq/images/792556447-Screenshot_20220516_125027.png)
+[Open a screenshot in a fullscreen](https://bitbucket.org/repo/Ag9LKzq/images/792556447-Screenshot_20220516_125027.png)
 
 1) Provide the name of proxy
 
