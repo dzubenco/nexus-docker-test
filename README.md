@@ -229,7 +229,7 @@ https://help.sonatype.com/repomanager3/planning-your-implementation/backup-and-r
 
 <details>
 <summary>Anonymous access & Local Authorizing Realm</summary>
-
+---
 During initial configuration of Nexus repository you should remain the following checkbox and choose "Local Authorizing Realm" in the Realm dropdown:
 
 ![Screenshot_20220922_100138.png](https://bitbucket.org/repo/Ag9LKzq/images/3880051481-Screenshot_20220922_100138.png)
