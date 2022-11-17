@@ -227,12 +227,10 @@ https://help.sonatype.com/repomanager3/planning-your-implementation/backup-and-r
 
 # Post-install steps
 
-![img](https://bitbucket.org/repo/Ag9LKzq/images/3880051481-Screenshot_20220922_100138.png)
-
 <details>
 <summary>Anonymous access & Local Authorizing Realm</summary>
 
----
+#
 During initial configuration of Nexus repository you should remain the following checkbox and choose "Local Authorizing Realm" in the Realm dropdown:
 
 ![img](https://bitbucket.org/repo/Ag9LKzq/images/3880051481-Screenshot_20220922_100138.png)
@@ -242,5 +240,81 @@ In case if you've missed this, you can find this setting in the [ 1) Admin panel
 ![img](https://bitbucket.org/repo/Ag9LKzq/images/2991281466-Screenshot_20220922_100414.png)
 
 Then go to [ 1) Admin panel -> 2) Realms ] and add Local Authorizing Realm to the active block.
+
+</details>
+
+
+<details> 
+<summary>Create Cleanup policies for each types of repo</summary> 
+
+#
+1) Login to Nexus as Admin
+
+2) Navigate to Admin panel at the very top of Nexus UI
+
+![Screenshot_20220922_111946.png](https://bitbucket.org/repo/Ag9LKzq/images/1268056392-Screenshot_20220922_111946.png)
+
+3) At the Repository section choose "Cleanup policies"
+
+![Screenshot_20220922_112117.png](https://bitbucket.org/repo/Ag9LKzq/images/373771384-Screenshot_20220922_112117.png)
+
+4) Click at the "Create Cleanup Policy" button
+
+The next steps (as an example) will be described for a maven type of repository:
+
+![Screenshot_20220922_112522.png](https://bitbucket.org/repo/Ag9LKzq/images/1892634485-Screenshot_20220922_112522.png)
+
+**1)** Specify the name of cleanup policy --> **2)** Choose the type of repository (at the screenshot above it's maven2) --> **3)** Choose Cleanup criteria (at the screenshot above it's about to delete components that haven't been downloaded in 3 days)
+
+These steps should be repeated for all the type of repositories for which you need to have a cleanup job configured.
+In my case it's the following list: apt, conda, docker, helm, maven, npm, pypi
+
+![Screenshot_20220922_113509.png](https://bitbucket.org/repo/Ag9LKzq/images/3607471725-Screenshot_20220922_113509.png)
+
+</details>
+
+
+# Setup Docker repositories
+
+Nexus Repository Manager support Docker registries as the Docker repository format for hosted and proxy repositories. Official documentation from Sonatype on how to proxy Docker: [link](https://help.sonatype.com/repomanager3/nexus-repository-administration/formats/docker-registry/proxy-repository-for-docker)
+
+Prerequisite: Go to "server administration and configuration" section -> Choose "Security" -> "Realms" option on the left sidebar -> Add Docker Bearer Token Realm to the active block
+
+<details>
+<summary>Setup Proxy Docker repository</summary>
+
+#
+Go to "server administration and configuration" section -> Choose "repositories" option on the left sidebar, then click "create repository" button at the very top of the screen -> Choose "docker (proxy)" type
+
+![Screenshot_20220516_125027.png](https://bitbucket.org/repo/Ag9LKzq/images/792556447-Screenshot_20220516_125027.png)
+
+1) Provide the name of proxy
+
+2) Check the "HTTP" checkbox and provide a Port value you may use for this repository (at the screenshot it's 8181)
+
+3) Check "allow anonymous docker pull"
+
+4) Provide the URL of the remote storage (for example, https://registry-1.docker.io). Note: each proxy repository can use only one remote storage
+
+5) For the Docker index, select Use Docker Hub
+
+6) Check "Allow Nexus Repository Manager to download and cache foreign layers" checkbox. Remain the regexp by default
+
+7) Please don't forget to apply to the repository the cleanup policy which has been created at the [Post-Install steps] -> [Create Cleanup policies for each types of repo] section of this guide
+ 
+</details>
+
+<details>
+<summary>Setup Hosted Docker repository</summary>
+
+</details>
+
+<details>
+<summary>Setup Group Docker repository</summary>
+
+</details>
+
+<details>
+<summary>Client configuration & How to use</summary>
 
 </details>
