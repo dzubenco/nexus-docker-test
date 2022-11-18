@@ -75,7 +75,7 @@ sudo tar -xvzf nexus.tar.gz
 ```
 You should see two directories: nexus files directory (it's name is "nexus-3.20.1-01" at the screenshot below) and nexus data directory (it's name is "sonatype-work" at the screenshot below).
 
-![Screenshot_20220505_103625.png](https://bitbucket.org/repo/Ag9LKzq/images/433202221-Screenshot_20220505_103625.png)
+![1.png](images/1.png)
 
 Rename the nexus files directory
 ```
