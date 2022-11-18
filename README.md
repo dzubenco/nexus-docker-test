@@ -163,7 +163,7 @@ sudo service nexus start
 
 **Note:** default settings of Port and Host values which nexus uses once the service is started can be found in "/opt/nexus/etc/nexus-default.properties":
 
-![Screenshot_20220506_103304.png](https://bitbucket.org/repo/Ag9LKzq/images/1251430095-Screenshot_20220506_103304.png)
+![2.png](images/2.png)
 
 
 **Post install:** Login as admin to Nexus
@@ -233,11 +233,11 @@ https://help.sonatype.com/repomanager3/planning-your-implementation/backup-and-r
 #
 During initial configuration of Nexus repository you should remain the following checkbox and choose "Local Authorizing Realm" in the Realm dropdown:
 
-![img](https://bitbucket.org/repo/Ag9LKzq/images/3880051481-Screenshot_20220922_100138.png)
+![3.png](images/3.png)
 
 In case if you've missed this, you can find this setting in the [ 1) Admin panel -> 2) Anonymous access ] panel as shown below:
 
-![img](https://bitbucket.org/repo/Ag9LKzq/images/2991281466-Screenshot_20220922_100414.png)
+![4.png](images/4.png)
 
 Then go to [ 1) Admin panel -> 2) Realms ] and add Local Authorizing Realm to the active block.
 
@@ -252,24 +252,24 @@ Then go to [ 1) Admin panel -> 2) Realms ] and add Local Authorizing Realm to th
 
 2) Navigate to Admin panel at the very top of Nexus UI
 
-![Screenshot_20220922_111946.png](https://bitbucket.org/repo/Ag9LKzq/images/1268056392-Screenshot_20220922_111946.png)
+![5.png](images/5.png)
 
 3) At the Repository section choose "Cleanup policies"
 
-![Screenshot_20220922_112117.png](https://bitbucket.org/repo/Ag9LKzq/images/373771384-Screenshot_20220922_112117.png)
+![6.png](images/6.png)
 
 4) Click at the "Create Cleanup Policy" button
 
 The next steps (as an example) will be described for a maven type of repository:
 
-![Screenshot_20220922_112522.png](https://bitbucket.org/repo/Ag9LKzq/images/1892634485-Screenshot_20220922_112522.png)
+![7.png](images/7.png)
 
 **1)** Specify the name of cleanup policy --> **2)** Choose the type of repository (at the screenshot above it's maven2) --> **3)** Choose Cleanup criteria (at the screenshot above it's about to delete components that haven't been downloaded in 3 days)
 
 These steps should be repeated for all the type of repositories for which you need to have a cleanup job configured.
 In my case it's the following list: apt, conda, docker, helm, maven, npm, pypi
 
-![Screenshot_20220922_113509.png](https://bitbucket.org/repo/Ag9LKzq/images/3607471725-Screenshot_20220922_113509.png)
+![8.png](images/8.png)
 
 </details>
 
@@ -286,7 +286,7 @@ Prerequisite: Go to "server administration and configuration" section -> Choose 
 #
 Go to "server administration and configuration" section -> Choose "repositories" option on the left sidebar, then click "create repository" button at the very top of the screen -> Choose "docker (proxy)" type
 
-[Open a screenshot in a fullscreen](https://bitbucket.org/repo/Ag9LKzq/images/792556447-Screenshot_20220516_125027.png)
+![9.png](images/9.png)
 
 1) Provide the name of proxy
 
@@ -301,11 +301,31 @@ Go to "server administration and configuration" section -> Choose "repositories"
 6) Check "Allow Nexus Repository Manager to download and cache foreign layers" checkbox. Remain the regexp by default
 
 7) Please don't forget to apply to the repository the cleanup policy which has been created at the [Post-Install steps] -> [Create Cleanup policies for each types of repo] section of this guide
- 
+
+![10.png](images/10.png)
+
 </details>
 
 <details>
 <summary><h4>Setup Hosted Docker repository</h4></summary>
+
+#
+If you want to have an ability to push your own Docker images to the Nexus, you would need to have Hosted Repository set up.
+
+The creation of Hosted Docker repository in Nexus is pretty similar to the Proxy Docker repository set up described above.
+
+The differences are that:
+
+1) When choosing the repository type to be created, choose "docker (hosted)"
+
+2) Provide a name of repository, choose the blobstore (or remain it default) and apply a cleanup policy if needed (it should be set up as at the [Post-Install steps] -> [Create Cleanup policies for each types of repo] section of this guide)
+
+3) Don't forger to provide a HTTP connector at specified port as at the screenshot below. The port should be different from other HTTP connector ports specified for other created repos.
+
+![11.png](images/11.png)
+
+Then you will be able to push your own images to such repository. 
+Example of pushing to Docker hosted repo can be found at the **"Client configuration & How to use"** section below
 
 </details>
 
