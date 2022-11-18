@@ -273,6 +273,12 @@ In my case it's the following list: apt, conda, docker, helm, maven, npm, pypi
 
 </details>
 
+<details>
+<summary>Set up Users and User roles for contributing</summary>
+
+#
+</details>
+
 
 # Setup Docker repositories
 
@@ -298,7 +304,7 @@ Go to "server administration and configuration" section -> Choose "repositories"
 
 5) For the Docker index, select Use Docker Hub
 
-6) Check "Allow Nexus Repository Manager to download and cache foreign layers" checkbox. Remain the regexp by default
+6) Check "Allow Nexus Repository Manager to download and cache foreign layers" checkbox (info: [link](https://help.sonatype.com/repomanager3/nexus-repository-administration/formats/docker-registry/foreign-layers)). Remain the regexp by default
 
 7) Please don't forget to apply to the repository the cleanup policy which has been created at the [Post-Install steps] -> [Create Cleanup policies for each types of repo] section of this guide
 
@@ -332,10 +338,91 @@ Example of pushing to Docker hosted repo can be found at the **"Client configura
 <details>
 <summary><h4>Setup Group Docker repository</h4></summary>
 
+#
+Several Docker repositories can be grouped in order to simplify access if you're going to use different remote repos at the same time.
+For more details please refer to the [guide](https://help.sonatype.com/repomanager3/nexus-repository-administration/formats/docker-registry/grouping-docker-repositories) .
+
+In our case, Nexus contains the Docker Group repository which includes all the Proxy Docker repos and Hosted Docker repo. 
+So, accessing the only one HTTP connector of Group repository, we will be able to **download** any image from all these repos (please **note** that Nexus Repository OSS **does not support pushing** into a group repository, so only pulling from group repository is available. Explicit push to the hosted repository is described in the **"Client configuration & How to use"** section below):
+
+![12.png](images/12.png)
 </details>
 
 <details>
 <summary><h4>Client configuration & How to use</h4></summary>
+
+#
+
+1) Go to /etc/docker/daemon.json and change it's content as follows:
+```
+{ "features" : { "buildkit": true},
+"insecure-registries": ["nexus_address:http_connector_group_repo", "http://nexus_address:http_connector_group_repo", "nexus_address:http_connector_hosted_repo", "http://nexus_address:http_connector_hosted_repo"],
+"registry-mirrors": ["http://nexus_address:http_connector_group_repo", "http://nexus_address:http_connector_hosted_repo"],
+"debug": true
+ }
+
+```
+
+for example, in my case it would be:
+
+```
+{ "features" : { "buildkit": true}, 
+"insecure-registries": ["localhost:8183", "http://localhost:8183", "localhost:8182", "http://localhost:8182"], 
+"registry-mirrors": ["http://localhost:8183", "http://localhost:8182"], 
+"debug": true 
+ }
+```
+
+2) Create a file /etc/default/docker and put the following line:
+
+```
+DOCKER_OPTS="--config-file=/etc/docker/daemon.json"
+```
+
+![13.png](images/13.png)
+
+3) Go to **~/.docker/config.json**. In case if it contains a record with docker.io, delete it (otherwise docker will work with docker hub instead of proxy)
+
+4) Restart the docker service:
+
+```
+sudo systemctl restart docker
+```
+
+Run docker info command:
+
+```
+docker info
+```
+
+At the bottom you should see records similar to the following:
+
+![14.png](images/14.png)
+
+Now if you run in your console:
+
+```
+docker pull
+# or
+docker push
+```
+
+your docker will point to the Nexus instance.
+
+**Example of pushing** to Docker hosted repo:
+General approach is described [here](https://help.sonatype.com/repomanager3/nexus-repository-administration/formats/docker-registry/pushing-images)
+
+I've chose one of the available images for pushing:
+
+![15.png](images/15.png)
+
+Then made a tag:
+
+![16.png](images/16.png)
+
+Then authenticated as docker-contributer user (password: qwe123) and pushed the image:
+
+![17.png](images/17.png)
 
 </details>
 
