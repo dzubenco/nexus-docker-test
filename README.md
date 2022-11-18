@@ -274,7 +274,7 @@ In my case it's the following list: apt, conda, docker, helm, maven, npm, pypi
 </details>
 
 <details>
-<summary>Set up Users and User roles for contributing</summary>
+<summary><h4>Set up Users and User roles for contributing</h4></summary>
 
 #
 </details>
