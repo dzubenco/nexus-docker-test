@@ -649,10 +649,40 @@ curl -X 'POST' \
 
 # Setup Maven repositories
 
+Official documentation from Sonatype on how to proxy Maven dependencies: [link](https://help.sonatype.com/repomanager3/nexus-repository-administration/formats/maven-repositories)
+
 <details>
 <summary><h4>Setup Proxy Maven repository</h4></summary>
 
 #
+
+Note: Nexus has a set of Maven repositories (proxy, hosted and group types) installed by default from the box.
+
+![27.png](images/27.png)
+
+In most cases it would be enough and you can use them to proxy your dependencies, there is no need to create a separate proxy. But in case if you need this, you can go ahead with the following steps.
+
+![28.png](images/28.png)
+
+1) Go to "server administration and configuration" section
+
+2) Choose "repositories" option on the left sidebar, then click "create repository" button at the very top of the screen
+
+3) Choose "maven (proxy)" type
+
+![29.png](images/29.png)
+
+1) Provide the name of proxy
+
+2) Provide the URL of the remote storage (for example, https://repo1.maven.org/maven2/). Note: each proxy repository can use only one remote storage
+
+3) Please don't forget to apply to the repository the cleanup policy which has been created at the **cleanup policies section** of this guide
+
+![30.png](images/30.png)
+
+As a result, repository like this should appear:
+
+![31.png](images/31.png)
 
 </details>
 
@@ -661,6 +691,16 @@ curl -X 'POST' \
 
 #
 
+If you want to have an ability to push your own Maven dependencies to the Nexus, you would need to have Hosted Repository set up.
+
+The creation of Hosted Maven repository in Nexus is pretty similar to the **Proxy Maven** repository creation.
+
+The differences are that:
+
+1) When choosing the repository type to be created, choose "maven (hosted)"
+
+2) Provide a name of repository, choose the blobstore (or remain it default) and apply a cleanup policy if needed (it should be set up as above at the **cleanup policies setup** section of this guide))
+
 </details>
 
 <details>
@@ -668,10 +708,53 @@ curl -X 'POST' \
 
 #
 
+Several Maven repositories can be grouped in order to simplify access if you're going to use different remote repositories at the same time.
+For more details please refer to the [guide](https://help.sonatype.com/repomanager3/nexus-repository-administration/repository-management) on repository types (group repository section).
+
+For example, you can group both **Maven Proxy** and **Maven Hosted** repositories in the same **Maven Group** Repo:
+
+![32.png](images/32.png)
+
 </details>
 
 <details>
 <summary><h4>Client configuration & How to use</h4></summary>
+
+#
+
+1) In your ~/.m2/ directory create a settings.xml file and fill it with the following data (in case if it already exists, override it's content):
+
+```
+<settings>
+  <mirrors>
+	<mirror>
+  	<!--This sends everything else to /public -->
+  	<id>nexus</id>
+  	<mirrorOf>external:*</mirrorOf>
+	<url>http://localhost:8082/repository/maven-public/</url>
+	</mirror>
+  </mirrors>
+</settings>
+```
+
+Now, every maven command will use the mirror identified in user's settings.xml and only after that settings from pom will be picked up. There's no need to include the path of settings.xml in the maven command after -s flag. Maven will automatically check for settings in .m2 directory.
+
+More documentation about mirror settings can be found in the mini guide on the [Maven web site](http://maven.apache.org/guides/mini/guide-mirror-settings.html).
+
+Now, in order to check that the setting works well, you can go to directory that contain pom.xml and execute mvn package:
+```
+cd /...
+
+mvn package
+```
+
+The log shown in terminal may contain URL address of specified proxy.
+
+In case if you want to, you can explicitly define the path for settings.xml configuration file inside the maven command (-s flag) as shown below:
+
+```
+mvn -B -s $settings_xml_path -Dmaven.repo.local=$maven_repo_path install
+```
 
 </details>
 
