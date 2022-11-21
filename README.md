@@ -851,10 +851,40 @@ conda install pip -c conda-forge
 
 # Setup Npm repositories
 
+Official documentation from Sonatype on how to proxy npm dependencies: [link](https://help.sonatype.com/repomanager3/nexus-repository-administration/formats/npm-registry)
+
 <details>
 <summary><h4>Setup Proxy Npm repository</h4></summary>
 
 #
+
+Note: each proxy repository can use only one remote storage
+
+We will setup a proxy for the following remote storage:
+
+```python
+https://registry.npmjs.org/
+```
+
+For any other proxies the setup is similar and can be done as follows:
+
+Go to "server administration and configuration" section -> Choose "repositories" option on the left sidebar, then click "create repository" button at the very top of the screen -> Choose "npm (proxy)" type
+
+![37.png](images/37.png)
+
+1) Provide the name of proxy
+
+2) Provide the URL of the remote storage (for example, https://registry.npmjs.org/)
+
+3) (Optional, can be remained by default) Choose a blob store for the repository if you need to separate it from the default one.
+
+4) Please don't forget to apply to the repository the cleanup policy which has been created at the **cleanup policies section** of this guide
+
+![38.png](images/38.png)
+
+As a result, repository like this should appear:
+
+![39.png](images/39.png)
 
 </details>
 
@@ -863,6 +893,16 @@ conda install pip -c conda-forge
 
 #
 
+If you want to have an ability to push your own Npm dependencies to the Nexus, you would need to have Hosted Repository set up.
+
+The creation of Hosted Npm repository in Nexus is pretty similar to the **Proxy Npm repository** creation.
+
+The differences are that:
+
+1) When choosing the repository type to be created, choose "npm (hosted)"
+
+2) Provide a name of repository, choose the blobstore (or remain it default) and apply a cleanup policy if needed (it should be set up as above in the **cleanup policies setup** section of this guide)
+
 </details>
 
 <details>
@@ -870,16 +910,55 @@ conda install pip -c conda-forge
 
 #
 
+Several npm repositories can be grouped in order to simplify access if you're going to use different remote storages at the same time.
+For more details please refer to the [guide](https://help.sonatype.com/repomanager3/nexus-repository-administration/repository-management) on repository types (group repository section).
+
+For example, in our case we can join **Proxy** and **Hosted** repositories in the same group:
+
+![40.png](images/40.png)
+
 </details>
 
 <details>
 <summary><h4>Nginx configuration to redirect npm audit</h4></summary>
+
+#
+
+![41.png](images/41.png)
 
 </details>
 
 <details>
 <summary><h4>Client configuration & How to use</h4></summary>
 
+#
+
+One of the options is to use repository URL directly in he npm command as follows:
+
+```
+npm --registry http://localhost:8082/repository/npm/ install yarn   
+```
+
+This command will download yarn package from the https://registry.npmjs.org/ remote repository and it will be cached in our proxy repository which URL was placed under --registry flag.
+
+Also registry can be configured in the .npmrc configuration file (for more detail please refer to the following [guide](https://help.sonatype.com/repomanager3/nexus-repository-administration/formats/npm-registry/configuring-npm)):
+
+1) Create ~/.npmrc file uder your user's home directory and fill it with the content similar to the following:
+
+```
+registry=http://localhost:8082/repository/npm-group/
+_auth=YWRtaW46bmV4dXM=
+
+```
+
+Try the following commands to ensure that npm refers to the proxy:
+
+```
+npm install express --loglevel verbose
+npm install yarn --loglevel verbose
+```
+
+---
 </details>
 
 # Setup Pypi repositories
