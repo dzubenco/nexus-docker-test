@@ -767,16 +767,86 @@ mvn -B -s $settings_xml_path -Dmaven.repo.local=$maven_repo_path install
 
 # Setup Conda repositories
 
+Official documentation from Sonatype on how to proxy Conda dependencies: [link](https://help.sonatype.com/repomanager3/nexus-repository-administration/formats/conda-repositories)
+
 <details>
 <summary><h4>Setup Proxy Conda repository</h4></summary>
 
 #
 
+Note: each proxy repository can use only one remote storage (channel)
+
+Our project is correctly using Conda Proxy repositories for the following channels:
+
+```python
+https://conda.anaconda.org/conda-forge/
+https://conda.anaconda.org/anaconda/
+```
+
+For both channels setup is similar and should be done as follows:
+
+![33.png](images/33.png)
+
+1) Go to "server administration and configuration" section
+
+2) Choose "repositories" option on the left sidebar, then click "create repository" button at the very top of the screen
+
+3) Choose "conda (proxy)" type
+
+![34.png](images/34.png)
+
+1) Provide the name of proxy (if you are proxying a common channel, e.g. conda-forge, try to use the same name)
+
+2) Provide the URL of remote storage (in case of conda-forge channel it's https://conda.anaconda.org/conda-forge/)
+
+3) (Optional, can be remained by default) Choose a blob store for the repository if you need to separate it from the default one.
+
+4) Please don't forget to apply to the repository the cleanup policy which has been created at the **cleanup policies section** of this guide
+
+![35.png](images/35.png)
+
+As a result, repository like this should appear:
+
+![36.png](images/36.png)
 </details>
 
 <details>
 <summary><h4>Client configuration & How to use</h4></summary>
 
+#
+
+One of the options is to use repository URL directly in the conda (or miniconda, or micromamba) command, for example the following command:
+
+```
+micromamba install -c http://localhost:8082/repository/conda-forge/ numpy
+```
+
+downloads numpy package from conda-forge remote repository through our proxy repository.
+
+Content of the -c flag represents URL to the Nexus repository.
+
+The better way would be to use .condarc configuration file (more details on how to use .condarc file can be found [here](https://docs.conda.io/projects/conda/en/latest/user-guide/configuration/use-condarc.html))
+
+1) Create ~/.condarc file under your user's home directory and fill it with the content similar to the following:
+
+```
+channel_alias: http://localhost:8082/repository/
+```
+
+This alias means, that every conda command, which is including channel with *channel_name*, will be actually referring to *http://localhost:8082/repository/**channel_name***
+
+**Note** that currently we have proxy repositories for *conda-forge* and *anaconda* channels only:
+
+```
+https://conda.anaconda.org/conda-forge/
+https://conda.anaconda.org/anaconda/
+```
+
+So the command structure like in example below is valid (we can use these two channels without explicit mention of proxy url):
+
+```
+conda install pip -c conda-forge
+```
 </details>
 
 # Setup Npm repositories
