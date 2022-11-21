@@ -334,7 +334,7 @@ It's a kind of hard delete. Any clean up (task, or individual deletions) done vi
 - define "deploy offset in hours" value - Manifests and images deployed within this period before the task starts will not be deleted
 
 - define frequency of running (e.g. daily)
-- 
+
 </details>
 
 <details>
