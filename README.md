@@ -963,10 +963,30 @@ npm install yarn --loglevel verbose
 
 # Setup Pypi repositories
 
+Official documentation from Sonatype on how to proxy PyPi dependencies: [link](https://help.sonatype.com/repomanager3/nexus-repository-administration/formats/pypi-repositories)
+
 <details>
 <summary><h4>Setup Proxy Pypi repository</h4></summary>
 
 #
+
+Go to "server administration and configuration" section -> Choose "repositories" option on the left sidebar, then click "create repository" button at the very top of the screen -> Choose "pypi (proxy)" type
+
+![42.png](images/42.png)
+
+1) Provide the name of proxy
+
+2) Provide the URL of the remote storage (for PyPi the most common is https://pypi.org/). Note: each proxy repository can use only one remote storage
+
+3) Change the blobstore if needed (or keep default)
+
+4) Please don't forget to apply to the repository the cleanup policy which has been created at the **cleanup policies section** of this guide
+
+![43.png](images/43.png)
+
+As a result, repository like this should appear:
+
+![44.png](images/44.png)
 
 </details>
 
@@ -975,6 +995,16 @@ npm install yarn --loglevel verbose
 
 #
 
+If you want to have an ability to push your own PyPi artifacts to the Nexus, you would need to have Hosted Repository set up.
+
+The creation of Hosted PyPi repository in Nexus is pretty similar to the **Proxy PyPi repository** creation.
+
+The differences are that:
+
+1) When choosing the repository type to be created, choose "pypi (hosted)"
+
+2) Provide a name of repository, choose the blobstore (or remain it default) and apply a cleanup policy if needed (it should be set up as above in the **cleanup policies** section of this guide)
+
 </details>
 
 <details>
@@ -982,13 +1012,100 @@ npm install yarn --loglevel verbose
 
 #
 
+Several PyPi repositories can be grouped in order to simplify access if you're going to use different remote storages at the same time.
+For more details please refer to the [guide](https://help.sonatype.com/repomanager3/nexus-repository-administration/repository-management) on repository types (group repository section).
+
+In our own configuration, I've created a proxy to https://pypi.org/, then hosted repository for our own artifacts and then grouped them both under group repository. Now, we can access group repository in order to manage artifacts in both proxy and hosted repos.
+
+![45.png](images/45.png)
 </details>
 
 <details>
 <summary><h4>Client configuration & How to use</h4></summary>
+
+#
+
+## pip.conf ##
+
+If you are going to use pip to download pip dependencies, create a pip.conf file:
+
+1) Create a new file under your home directory **~/.config/pip/pip.conf** with the following content:
+```
+[global]
+index-url = http://localhost:8082/repository/pypi-group/simple
+trusted-host = localhost
+```
+
+Note that *http://localhost:8082/repository/pypi-group/* - is URL for my group repository which contains proxy repository for https://pypi.org/
+
+But don't forget to add **/simple** postfix to the end of index-url
+
+Then you can use a command like the following one to ensure that setting is working fine - log should contain URL of the proxy:
+```
+pip install twine 
+```
+---
+
+## .pypirc ##
+
+Note that pip doesn't use **.pypirc** at all. **.pypirc** is only used by tools that publish packages to an index (for example, twine) and pip doesn't publish packages.
+
+If you want to upload a package to a hosted repository using twine, you would need to configure a .pypirc file:
+
+1) Create a .pypirc file under your user's home directory **~/.pypirc** with the following content:
+
+```
+[distutils]
+index-servers =
+    pypi
+
+[pypi]
+repository = http://localhost:8082/repository/pypi-group/simple
+```
 
 </details>
 
 # Debian
 
 # How to configure S3 Blobstore in Nexus
+
+<details>
+<summary><h4>Setup a S3 blobstore in Nexus</h4></summary>
+
+#
+
+![47.png](images/47.png)
+
+1) Go to "server administration and configuration" section
+
+2) Choose "blob store" option on the left sidebar
+
+3) Click "create blob store" button
+
+![48.png](images/48.png)
+
+
+Expand Authentication and Advanced Connection Settings and fill as follows:
+
+Type: S3
+
+Name: Enter a name (e.g. test-blobstore)
+
+Region: Choose us-east-1
+
+Bucket: Enter the name of the bucket you created in Minio or AWS
+
+Access Key ID: Enter the access key id you provided to Minio (e.g. "mykey")
+
+Secret Access Key: Enter the secret access key you provided to Minio (e.g. "mysecret")
+
+Session Token: leave blank
+
+Assume Role ARN: leave blank
+
+Endpoint URL: Enter the Minio API URL (e.g. http://127.0.0.1:9000) or any other
+
+Expiration Days: Enter -1
+
+Signature version: Leave as default
+</details>
