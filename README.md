@@ -274,7 +274,71 @@ In my case it's the following list: apt, conda, docker, helm, maven, npm, pypi
 </details>
 
 <details>
-<summary><h4>Set up Users and User roles for contributing</h4></summary>
+<summary><h4>Setup cleanup tasks (!)</h4></summary>
+
+#
+1) Login to Nexus as Admin
+
+2) Navigate to Admin panel at the very top of Nexus UI
+
+![55.png](images/5.png)
+
+3) At the System section choose "Tasks"
+
+![20.png](images/20.png)
+
+4) Click on "Create task" button
+
+![21.png](images/21.png)
+
+5) Choose **"Cleanup Service (Admin - Cleanup repositories using their associated policies)"**
+
+This task will clean up all the items which are valid to be cleaned up according to the **cleanup policies** set up for each repository separately.
+
+- define the name of the task
+
+- define frequency of running (e.g. daily)
+
+6) Choose **"Admin - Compact Blob Store"**
+
+It's a kind of hard delete. Any clean up (task, or individual deletions) done via NXRM3 is soft deleted in case it's removed the wrong thing, you can restore. Compact blob store task finishes the job (removing all soft deleted items).
+
+- define the name of the task
+
+- choose the blobstore this task will be applied to
+
+- define frequency of running (e.g. daily)
+
+7) Choose **"Delete blob store temporary files"**
+
+- define the name of the task
+
+- choose the blobstore this task will be applied to
+
+- define frequency of running (e.g. daily)
+
+8) Choose **"Docker - delete incomplete upload tasks"**
+
+- define the name of the task
+
+- define "age in hours" value - incomplete docker uploads that are older than the specified age in hours will be deleted
+
+- define frequency of running (e.g. daily)
+
+9) Choose **"Docker - delete unused manifests and images"**
+
+- define the name of the task
+
+- provide the nexus repository name to clean up
+
+- define "deploy offset in hours" value - Manifests and images deployed within this period before the task starts will not be deleted
+
+- define frequency of running (e.g. daily)
+- 
+</details>
+
+<details>
+<summary><h4>Setup Users and User roles for contributing</h4></summary>
 
 #
 Example will contain info about how to create **user role** and **user** that are able to download/upload artifacts to **Docker** Nexus repositories.
