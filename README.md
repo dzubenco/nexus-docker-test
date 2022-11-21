@@ -277,7 +277,7 @@ In my case it's the following list: apt, conda, docker, helm, maven, npm, pypi
 <summary><h4>Set up Users and User roles for contributing</h4></summary>
 
 #
-Example will contain info about how to create **user role** and **user** that are able to download/upload artifacts to Docker Nexus repositories.
+Example will contain info about how to create **user role** and **user** that are able to download/upload artifacts to **Docker** Nexus repositories.
 
 Login as Admin user -> Go to Admin Panel -> Expand "Security" section -> Choose "Roles" -> Click "Create Role"
 
@@ -299,9 +299,13 @@ Go to Admin Panel -> Expand "Security" section -> Choose "Users" -> Click "Creat
 Fill the form: 
 
 ID: any description e.g. "docker-contributor"
+
 First Name, Last Name, Email: any dummy values
+
 Password: it will be used for authentication
+
 Status: choose "active"
+
 Roles: move previously created role (in my case it's "docker-contributor") from "Available" section to "Granted"
 
 Save the user
