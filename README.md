@@ -520,7 +520,7 @@ Then made a tag:
 
 ![16.png](images/16.png)
 
-Then authenticated as docker-contributer user (password: qwe123) and pushed the image:
+Then authenticated as "docker-contributer" user (password: 123123123) and pushed the image:
 
 ![17.png](images/17.png)
 
