@@ -660,6 +660,13 @@ Note: Nexus has a set of Maven repositories (proxy, hosted and group types) inst
 
 ![27.png](images/27.png)
 
+```
+http://localhost:8082/repository/maven-central/ - proxy for https://repo1.maven.org/maven2/
+http://localhost:8082/repository/maven-snapshots/ - hosted repository for custom dependencies storage
+http://localhost:8082/repository/maven-releases/ - hosted repository for custom dependencies storage
+http://localhost:8082/repository/maven-public/ - group repository, includes all three above repos
+```
+
 In most cases it would be enough and you can use them to proxy your dependencies, there is no need to create a separate proxy. But in case if you need this, you can go ahead with the following steps.
 
 ![28.png](images/28.png)
