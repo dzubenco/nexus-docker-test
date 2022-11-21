@@ -634,13 +634,13 @@ helm fetch nexusrepo/mysql --version 1.4.0
 
 3) Made an archive out of the chart
 
-Then, using "alliedium" user with "drunKraken" password we can push the chart to the helm-hosted repo.
+Then, using "helm-contributor" user with "123123123" password we can push the chart to the helm-hosted repo.
 The following command should be used:
 
 ```
 curl -X 'POST' \
-  'http://192.168.107.65:8081/service/rest/v1/components?repository=helm-hosted' \
-  -u 'alliedium:drunKraken' \
+  'http://localhost:8082/service/rest/v1/components?repository=helm-hosted' \
+  -u 'helm-contributor:123123123' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
   -F 'helm.asset=@test_chart-0.1.0.tgz;type=application/x-compressed-tar'
