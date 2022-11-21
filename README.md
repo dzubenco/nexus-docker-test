@@ -833,7 +833,7 @@ The better way would be to use .condarc configuration file (more details on how 
 channel_alias: http://localhost:8082/repository/
 ```
 
-This alias means, that every conda command, which is including channel with *channel_name*, will be actually referring to *http://localhost:8082/repository/**channel_name***
+This alias means, that every conda command, which is including channel with *channel_name*, will be actually referring to http://localhost:8082/repository/**channel_name**
 
 **Note** that currently we have proxy repositories for *conda-forge* and *anaconda* channels only:
 
