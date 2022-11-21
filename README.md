@@ -528,10 +528,51 @@ Then authenticated as "docker-contributer" user (password: 123123123) and pushed
 
 # Setup Helm repositories
 
+Official documentation from Sonatype on how to proxy Helm: [link](https://help.sonatype.com/repomanager3/nexus-repository-administration/formats/helm-repositories)
+
 <details>
 <summary><h4>Setup Proxy Helm repository</h4></summary>
 
 #
+Note: each created repository can proxy only one remote repository.
+
+The list of Helm repositories for proxying:
+
+```
+https://oxyno-zeta.github.io/helm-charts-v2/
+https://argoproj.github.io/argo-helm/
+https://charts.bitnami.com/bitnami
+https://aws.github.io/eks-charts
+https://charts.crossplane.io/stable
+https://charts.bitnami.com/bitnami
+https://dapr.github.io/helm-charts
+```
+
+In general proxy repository can be set up as follows:
+
+![22.png](images/22.png)
+
+1) Go to "server administration and configuration" section
+
+2) Choose "repositories" option on the left sidebar, then click "create repository" button at the very top of the screen
+
+3) Choose "helm (proxy)" type
+
+![23.png](images/23.png)
+
+1) Provide the name of proxy
+
+2) Provide the URL of the remote storage (for example,  https://kubernetes-charts.storage.googleapis.com/ )
+
+3) (Optional, can be remained by default) Choose a blob store for the repository if you need to separate it from the default one.
+
+4) Please don't forget to apply to the repository the cleanup policy which has been created at the **cleanup policies section** of this guide
+
+![24.png](images/24.png)
+
+As a result, repository like this should appear:
+
+![25.png](images/25.png)
 
 </details>
 
@@ -540,11 +581,70 @@ Then authenticated as "docker-contributer" user (password: 123123123) and pushed
 
 #
 
+If you want to have an ability to push your own Helm charts to the Nexus, you would need to have Hosted Repository set up.
+
+The creation of Hosted Helm repository in Nexus is pretty similar to the **Proxy Helm repository** creation.
+
+The differences are that:
+
+1) When choosing the repository type to be created, choose "helm (hosted)"
+
+2) Provide a name of repository, choose the blobstore (or remain it default) and apply a cleanup policy if needed (it should be set up as above in the **cleanup policies setup** section)
+
 </details>
 
 <details>
 <summary><h4>Client configuration & How to use</h4></summary>
 
+#
+
+### **How to fetch Helm charts from helm-proxy repo**
+
+Once you have Helm up and running you'll want to run a command similar to the following to add a Helm repo:
+```
+helm repo add <helm_repository_name> http://<host>:<port>/repository/<nexus_repository_name>/ --username <username> --password <password>
+```
+
+The below command will fetch the latest chart or with the version:
+```
+1. helm fetch <helm_repository_name>/<chart_name>
+2. helm fetch <helm_repository_name>/<chart_name> --version <chart_version>
+```
+
+For example, Nexus Repository has a Helm proxy repository called **helm-proxy** and your Nexus Repository is running on localhost:8081 where username is admin and password is admin. 
+You would like to add this repository to Helm client. Also, you would like to fetch the latest MySQL chart. To accomplish this, you would do the following:
+```
+1. helm repo add nexusrepo http://localhost:8081/repository/helm-proxy/ --username admin --password admin
+2. helm fetch nexusrepo/mysql
+```
+
+If you want to fetch a chart with a specific version, just run it, like so:
+```
+helm fetch nexusrepo/mysql --version 1.4.0
+```
+
+---
+### **How to push Helm charts to the helm-hosted repo**
+
+![26.png](images/26.png)
+
+1) I've created test chart
+
+2) I've checked that chart directory has been created with default content
+
+3) Made an archive out of the chart
+
+Then, using "alliedium" user with "drunKraken" password we can push the chart to the helm-hosted repo.
+The following command should be used:
+
+```
+curl -X 'POST' \
+  'http://192.168.107.65:8081/service/rest/v1/components?repository=helm-hosted' \
+  -u 'alliedium:drunKraken' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'helm.asset=@test_chart-0.1.0.tgz;type=application/x-compressed-tar'
+```
 </details>
 
 # Setup Maven repositories
